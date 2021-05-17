@@ -2,6 +2,7 @@ package com.gon.coin.demotradingcoin.controller;
 
 import com.gon.coin.demotradingcoin.domain.Address;
 import com.gon.coin.demotradingcoin.domain.Member;
+import com.gon.coin.demotradingcoin.dto.MemberDto;
 import com.gon.coin.demotradingcoin.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,30 +21,42 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    /*
     @GetMapping("/members/new")
     public String createForm(Model model) {
         model.addAttribute("memberForm", new MemberForm());
         return "members/createMemberForm";
+    }*/
+    @GetMapping("/members/signup")
+    public String createForm(Model model) {
+        model.addAttribute("memberDto", new MemberDto());
+        return "/members/signupForm";
     }
 
-    @PostMapping("/members/new")
-    public String create(@Valid MemberForm form, BindingResult result){
+    @PostMapping("/members/signup")
+    public String create(@Valid MemberDto memberDto, BindingResult result){
 
         if(result.hasErrors()){
-            return "members/createMemberForm";
+            return "/members/signupForm";
         }
-        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
-        Member member = new Member();
-        member.setName(form.getName());
-        member.setAddress(address);
-        memberService.join(member);
+        memberService.signUp(memberDto);
         return "redirect:/";
     }
+
     @GetMapping("/members")
     public String list(Model model){
         List<Member> members = memberService.findMembers();
         model.addAttribute("members",members);
         return "members/memberList";
+    }
+    @GetMapping("/members/login")
+    public String loginForm() {
+        return "/members/loginForm";
+    }
+
+    @PostMapping("/members/login")
+    public String login() {
+        return "redirect:/";
     }
 }
 

@@ -1,34 +1,66 @@
 package com.gon.coin.demotradingcoin.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import com.gon.coin.demotradingcoin.config.Role;
 import com.gon.coin.demotradingcoin.domain.Member;
+import com.gon.coin.demotradingcoin.dto.MemberDto;
 import com.gon.coin.demotradingcoin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
-    //회원 가입
+    //회원 가입 simple
     @Transactional
     public Long join(Member member) {
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
         return member.getId();
     }
-
     private void validateDuplicateMember(Member member) {
         //EXCEPTION, 실무에서는 이름에 unique제약조건 걸어줘야함.
-        List<Member> findMembers=memberRepository.findByName(member.getName());
+        Optional<Member> findMembers=memberRepository.findByUsername(member.getUsername());
         if(!findMembers.isEmpty()){
             throw new IllegalStateException("already exist user");
         }
+    }
+    // 회원가입 security
+    @Transactional
+    public Long signUp(MemberDto memberDto) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+        // password를 암호화 한 뒤 dp에 저장
+        return memberRepository.save(memberDto.toEntity()).getId();
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // 로그인을 하기 위해 가입된 user정보를 조회하는 메서드
+        Optional<Member> memberWrapper = memberRepository.findByUsername(username);
+        Member member = memberWrapper.get();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if("admin".equals(username)){
+            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
+        } else {
+            authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
+        }
+        // 아이디, 비밀번호, 권한리스트를 매개변수로 User를 만들어 반환해준다.
+        return new User(member.getUsername(), member.getPassword(), authorities);
     }
 
     //회원 전체 조회
@@ -41,11 +73,7 @@ public class MemberService {
     }
 
 
-    @Transactional
-    public void update(Long id, String name) {
-        Member member = memberRepository.findById(id).get();
-        member.setName(name);
-    }
+
 }
 
 

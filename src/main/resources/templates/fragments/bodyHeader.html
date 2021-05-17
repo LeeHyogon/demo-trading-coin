@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <div class="header" th:fragment="bodyHeader">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -13,8 +13,21 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only"> </span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/members/new"> Join</a>
+                <li class="nav-item active">
+                    <a sec:authorize="isAuthenticated()" class="nav-link"  >반갑습니다. <span sec:authentication="name"></span>님!</a>
+                </li>
+                <hr>
+                <li class="nav-item active">
+                    <a sec:authorize="isAnonymous()" class="nav-link" href="/members/login">로그인 <span class="sr-only"> </span></a>
+<!--                    <a sec:authorize="isAnonymous()" th:href="@{/members/login}">로그인</a>-->
+                </li>
+                <li class="nav-item active">
+                    <a sec:authorize="isAuthenticated()" class="nav-link" href="/members/logout">로그아웃 <span class="sr-only"> </span></a>
+<!--                    <a sec:authorize="isAuthenticated()" th:href="@{/members/logout}">로그아웃</a>-->
+                </li>
+                <li class="nav-item active">
+                    <a sec:authorize="isAnonymous()" class="nav-link" href="/members/signup">회원가입 <span class="sr-only"> </span></a>
+<!--                    <a sec:authorize="isAnonymous()" th:href="@{/members/signup}">회원가입</a>-->
                 </li>
             </ul>
 
