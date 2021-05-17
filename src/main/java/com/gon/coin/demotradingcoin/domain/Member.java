@@ -4,6 +4,8 @@ package com.gon.coin.demotradingcoin.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +24,10 @@ public class Member {
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account account;
+
+
+    @OneToMany(mappedBy="member")
+    private List<BankTrade> trades=new ArrayList<>();
 
     public Member(String username) {
         this.username = username;

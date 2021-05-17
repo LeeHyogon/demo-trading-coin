@@ -40,14 +40,14 @@ public class InitDb {
             em.persist(coin);
         }
         public void dbInit3(){
-            Account account1 = createAccount("국민", "123456", BigInteger.valueOf(2000000000));
+            Account account1 = createAccount("국민", "123456", BigInteger.valueOf(0));
             em.persist(account1);
             Member memberA=createMember("memberA","1234",account1);
             em.persist(memberA);
         }
 
         public void dbInit4(){
-            Account account2 = createAccount("우리", "703456", BigInteger.valueOf(2000000000));
+            Account account2 = createAccount("우리", "703456", BigInteger.valueOf(1));
             em.persist(account2);
             Member memberB=createMember("memberB","1234",account2);
             em.persist(memberB);
