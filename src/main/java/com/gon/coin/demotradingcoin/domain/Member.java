@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Member {
 
@@ -40,4 +39,9 @@ public class Member {
         this.password = password;
     }
 
+    public Member(String username, String password, Account account) {
+        this.username=username;
+        this.password=password;
+        this.account=account;
+    }
 }

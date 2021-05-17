@@ -12,7 +12,6 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Coin {
     @Id
@@ -25,5 +24,9 @@ public class Coin {
     String icon_url;
 
 
-
+    public Coin(String name, int price, String icon_url) {
+        this.name=name;
+        this.price=price;
+        this.icon_url=icon_url;
+    }
 }

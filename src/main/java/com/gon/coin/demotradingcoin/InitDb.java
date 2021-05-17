@@ -54,26 +54,18 @@ public class InitDb {
         }
 
         private Member createMember(String username, String password, Account account) {
-            Member member = new Member();
-            member.setUsername(username);
-            member.setPassword(password);
-            member.setAccount(account);
-
+            Member member = new Member(username,password,account);
             return member;
         }
         private Account createAccount(String bankName,String bankCode,BigInteger SumOfMoney){
-            Account account= new Account();
-            account.setBankName(bankName);
-            account.setBankCode(bankCode);
-            account.setSumOfMoney(SumOfMoney);
+            Account account= new Account(bankName,bankCode,SumOfMoney);
+
             return account;
         }
 
         private Coin createCoin(String name,int price, String icon_url) {
-            Coin coin=new Coin();
-            coin.setName(name);
-            coin.setPrice(price);
-            coin.setIcon_url(icon_url);
+            Coin coin=new Coin(name,price,icon_url);
+
             return coin;
         }
     }
