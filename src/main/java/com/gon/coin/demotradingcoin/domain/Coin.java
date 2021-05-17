@@ -2,6 +2,7 @@ package com.gon.coin.demotradingcoin.domain;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Coin {
     @Id
     @GeneratedValue
@@ -19,9 +21,7 @@ public class Coin {
     private Long id;
 
     String name;
-
     int price;
-
     String icon_url;
 
 

@@ -10,6 +10,31 @@
 
     <h1> 코인 동향</h1>
 
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Logo</th>
+                <th>#</th>
+                <th>Coin Name</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="coin : ${coins}">
+                <td><img src="../static/img/ "width="100"
+                         th:src="@{'/img/'+ ${coin.icon_url}}"/></td>
+                <td th:text="${coin.id}"></td>
+                <td th:text="${coin.name}"></td>
+                <td th:text="${coin.price}"></td>
+                <td>
+                    <a href="#" th:href="@{/coins/{id}/edit (id=${coin.id})}"
+                       class="btn btn-primary" role="button">수정</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <!--    <div class="jumbotron">-->
 
 

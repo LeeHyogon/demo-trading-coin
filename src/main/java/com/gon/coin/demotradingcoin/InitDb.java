@@ -28,11 +28,11 @@ public class InitDb {
     static class InitService{
         private final EntityManager em;
         public void dbInit1(){
-            Coin coin =createCoin("BitCoin",58000000,"https://ibb.co/bryK0bm");
+            Coin coin =createCoin("BitCoin",58000000,"bitcoin_icon.png");
             em.persist(coin);
         }
         public void dbInit2(){
-            Coin coin =createCoin("ethereum",58000000,"https://ifh.cc/g/cKJtWo.jpg");
+            Coin coin =createCoin("ethereum",4100000,"etherium_icon.png");
             em.persist(coin);
         }
         private Coin createCoin(String name,int price, String icon_url) {

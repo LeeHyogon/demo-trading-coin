@@ -24,4 +24,7 @@ public class Member {
     private Address address;
 
 
+    public Member(String name) {
+        this.name=name;
+    }
 }
