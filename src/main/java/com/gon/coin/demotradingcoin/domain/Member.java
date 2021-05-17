@@ -7,7 +7,8 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -18,13 +19,9 @@ public class Member {
     private String username;
     private String password;
 
-    @Embedded
-    private Address address;
-
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account account;
-
 
     public Member(String username) {
         this.username = username;
@@ -36,4 +33,5 @@ public class Member {
         this.username = username;
         this.password = password;
     }
+
 }
