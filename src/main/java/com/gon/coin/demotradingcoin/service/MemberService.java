@@ -71,8 +71,9 @@ public class MemberService implements UserDetailsService {
     public Member findOne(Long memberId){
         return memberRepository.findById(memberId).get();
     }
-
-
+    public Member findByName(String username){
+        return memberRepository.findByUsername(username).get();
+    }
 
 }
 

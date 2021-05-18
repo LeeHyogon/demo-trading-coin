@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/header :: header">
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,9 +8,15 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
 
-    <h1> 코인 동향</h1>
+    <form>
 
+        <div class="form-group">
+            <label for="exampleInputPassword1">입금금액(KRW)</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="최소 5000 KRW">
+        </div>
 
+        <button type="submit" class="btn btn-primary" href="/banktrade/deposit">입금신청</button>
+    </form>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>

@@ -17,11 +17,10 @@ public class Account {
     @OneToOne(mappedBy="account",fetch=FetchType.LAZY)
     private Member member;
 
-
     private String bankName;
     private String bankCode;
 
-    BigInteger SumOfMoney;
+    BigInteger SumOfMoney=BigInteger.valueOf(0);
 
     public Account(String bankName, String bankCode, BigInteger sumOfMoney) {
         this.bankName = bankName;
