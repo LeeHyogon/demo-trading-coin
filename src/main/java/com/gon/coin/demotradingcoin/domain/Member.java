@@ -5,6 +5,7 @@ import com.gon.coin.demotradingcoin.config.Role;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,5 +49,9 @@ public class Member {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public void deposit(BigInteger krw) {
+        this.getAccount().deposit(krw);
     }
 }

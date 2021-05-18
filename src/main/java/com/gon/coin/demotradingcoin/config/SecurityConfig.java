@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/bank/**").hasRole(Role.MEMBER.name())
+                .antMatchers("/api/**").hasRole(Role.MEMBER.name())
                 .and()
                 .formLogin()     // 로그인 설정
                 .loginPage("/members/login")      // 커스텀 login 페이지를 사용
@@ -62,5 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 로그인 처리를 하기 위한 AuthenticationManagerBuilder를 설정
         auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
     }
+
 }
 

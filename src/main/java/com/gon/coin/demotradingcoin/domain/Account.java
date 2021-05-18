@@ -31,4 +31,8 @@ public class Account {
     public Account() {
 
     }
+
+    public void deposit(BigInteger krw) {
+        this.SumOfMoney.add(krw);
+    }
 }
