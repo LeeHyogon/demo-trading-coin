@@ -47,11 +47,18 @@ public class Member {
         this.role=role;
     }
 
+    public Member(String username, String password, Role role, Account account) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.account = account;
+    }
+
     public void setAccount(Account account) {
         this.account = account;
     }
 
-    public void deposit(BigInteger krw) {
+    public void deposit(int krw) {
         this.getAccount().deposit(krw);
     }
 }

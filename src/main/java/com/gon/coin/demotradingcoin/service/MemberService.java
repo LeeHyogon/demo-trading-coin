@@ -83,7 +83,8 @@ public class MemberService implements UserDetailsService {
         Optional<Member> member = memberRepository.findByUsername(user.getUsername());
         return member;
     }
-    public Long deposit(Member member,BigInteger krw){
+    @Transactional
+    public Long deposit(Member member,int krw){
         member.deposit(krw);
         return member.getId();
     }

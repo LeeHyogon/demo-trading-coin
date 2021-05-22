@@ -20,9 +20,10 @@ public class Account {
     private String bankName;
     private String bankCode;
 
-    BigInteger SumOfMoney=BigInteger.valueOf(0);
+    int SumOfMoney=0;
+//   BigInteger SumOfMoney=BigInteger.valueOf(0);
 
-    public Account(String bankName, String bankCode, BigInteger sumOfMoney) {
+    public Account(String bankName, String bankCode,int sumOfMoney) {
         this.bankName = bankName;
         this.bankCode = bankCode;
         SumOfMoney = sumOfMoney;
@@ -32,7 +33,7 @@ public class Account {
 
     }
 
-    public void deposit(BigInteger krw) {
-        this.SumOfMoney.add(krw);
+    public void deposit(int krw) {
+        this.SumOfMoney+=krw;
     }
 }

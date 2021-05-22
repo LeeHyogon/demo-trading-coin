@@ -11,9 +11,9 @@
     <h1 th:text="${name}"+ 님> </h1>
     <p th:text="보유금액+${money}+KRW"> </p>
 
-    <form method="GET" action="/bank/deposit">
+    <form method="get" action="/bank/deposit">
         <div class="form-group">
-            <label for="krw">입금금액(KRW)</label>
+            <label>입금금액(KRW)</label>
             <input type="number" name="krw" id="krw" class="form-control"
                    placeholder="최소 5000 KRW">
         </div>

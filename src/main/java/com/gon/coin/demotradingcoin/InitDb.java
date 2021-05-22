@@ -43,7 +43,7 @@ public class InitDb {
             em.persist(coin);
         }
         public void dbInit3(){
-            Account account1 = createAccount("국민", "123456", BigInteger.valueOf(1000000000));
+            Account account1 = createAccount("국민", "123456", 1000);
             em.persist(account1);
             MemberDto memberA=createMember("memberA","1234");
             memberService.signUp(memberA);
@@ -51,7 +51,7 @@ public class InitDb {
             member.setAccount(account1);
         }
         public void dbInit4(){
-            Account account1 = createAccount("우리", "703456", BigInteger.valueOf(2000000000));
+            Account account1 = createAccount("우리", "703456", 2000);
             em.persist(account1);
             MemberDto memberB=createMember("memberB","1234");
             memberService.signUp(memberB);
@@ -64,7 +64,7 @@ public class InitDb {
             MemberDto memberDto = new MemberDto(username,password);
             return memberDto;
         }
-        private Account createAccount(String bankName,String bankCode,BigInteger SumOfMoney){
+        private Account createAccount(String bankName,String bankCode,int SumOfMoney){
             Account account= new Account(bankName,bankCode,SumOfMoney);
 
             return account;
