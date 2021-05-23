@@ -27,7 +27,7 @@
                 <td th:text="${post.title}"></td>
                 <td th:text="${post.content}"></td>
                 <td th:text="${post.author}"></td>
-                <td th:text="${#calendars.setFormat(post.modifiedDate,'dd/MMM/yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(post.modifiedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
                     <a href="#" th:href="@{/freeposts/update/{id} (id=${post.id})}"
                        class="btn btn-primary" role="button">수정</a>

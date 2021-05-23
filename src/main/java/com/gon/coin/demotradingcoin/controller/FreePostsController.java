@@ -32,11 +32,12 @@ public class FreePostsController {
     }
 
     @PostMapping("/freeposts/save")
-    public String create(PostsSaveRequestDto requestDto,Model model) {
+    public String create(PostsSaveRequestDto requestDto) {
         postsService.save(requestDto);
-
-        model.addAttribute("posts",postsService.findAllDesc());
-        return "/posts/freeposts/postsHome";
+        //리소스를 생성하는 요청. POST는 리소스생성하는 역할만하고 클라이언트한테
+        //redirect할 주소알려주고 클라이언트는 서버가 알려준 주소로 GET요청을 다시보냄.
+        //model.addAttribute("posts",postsService.findAllDesc());
+        return "redirect:/freeposts";
     }
     @GetMapping("/freeposts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model) {

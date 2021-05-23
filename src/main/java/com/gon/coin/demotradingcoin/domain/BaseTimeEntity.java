@@ -1,9 +1,8 @@
 package com.gon.coin.demotradingcoin.domain;
 
 import lombok.Getter;
-import org.apache.tomcat.jni.Local;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.EntityListeners;
@@ -18,6 +17,7 @@ public class BaseTimeEntity {
     @CreatedDate
     private LocalDateTime createdDate;
 
-    @LastModifiedBy
+    @LastModifiedDate
     private LocalDateTime modifiedDate;
 }
+
