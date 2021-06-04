@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 public class FreePostsApiController {
 
     private final PostsService postsService;
-
     @PutMapping("/api/v1/posts/{id}")
     public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto) {
         return postsService.update(id, requestDto);
