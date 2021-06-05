@@ -21,13 +21,7 @@ import java.nio.charset.Charset;
 @RequiredArgsConstructor
 public class UpbitCoinApiController {
     private final UpbitCoinService upbitCoinService;
-    private static String CoinNameURL="https://api.upbit.com/v1/market/all";
 
-    @GetMapping("/api/v1/getcoinname")
-    public String callURLToString(){
-        upbitCoinService.saveCoinNameURL(CoinNameURL);
-        return "";
-    }
     @GetMapping("/api/v1/getdayitem")
     public void getDayData(){
         upbitCoinService.saveDayItemURL();

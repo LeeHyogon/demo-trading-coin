@@ -24,12 +24,11 @@ public class InitDb {
     private final UpbitCoinService upbitCoinService;
     @PostConstruct
     public void init(){
-        String CoinNameURL="https://api.upbit.com/v1/market/all";
         initService.dbInit1();
         initService.dbInit2();
         initService.dbInit3();
         initService.dbInit4();
-        upbitCoinService.saveCoinNameURL(CoinNameURL);
+        upbitCoinService.saveCoinNameURL();
     }
 
     @Component
@@ -39,11 +38,11 @@ public class InitDb {
         private final EntityManager em;
         private final MemberService memberService;
         public void dbInit1(){
-            Coin coin =createCoin("BitCoin",58000000,"bitcoin_icon.png");
+            Coin coin =createCoin("BitCoin",58000000,"KRW-BTC.png");
             em.persist(coin);
         }
         public void dbInit2(){
-            Coin coin =createCoin("ethereum",4100000,"etherium_icon.png");
+            Coin coin =createCoin("ethereum",4100000,"KRW-ETH.png");
             em.persist(coin);
         }
         public void dbInit3(){

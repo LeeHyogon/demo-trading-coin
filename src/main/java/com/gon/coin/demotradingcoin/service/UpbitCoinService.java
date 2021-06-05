@@ -80,9 +80,10 @@ public class UpbitCoinService {
         return sb.toString();
     }
     @Transactional
-    public void saveCoinNameURL(String url){
+    public void saveCoinNameURL(){
+        String CoinNameURL="https://api.upbit.com/v1/market/all";
         try{
-            URL postUrl = new URL(url);
+            URL postUrl = new URL(CoinNameURL);
             HttpURLConnection con = (HttpURLConnection)postUrl.openConnection();
             Object obj = JSONValue.parse(new InputStreamReader(con.getInputStream()));
             JSONArray jObj = (JSONArray) obj;
@@ -176,11 +177,12 @@ public class UpbitCoinService {
         return OffsetDateTime.parse((String) jsonObject.get(DateTime), format);
     }
 
-    private double getParseDouble(JSONObject jsonObject, String changeRate) {
-        return Double.parseDouble(String.valueOf(jsonObject.get(changeRate)));
+    private double getParseDouble(JSONObject jsonObject, String str) {
+        return Double.parseDouble(String.valueOf(jsonObject.get(str)));
     }
 
-    private Double getaDouble(JSONObject jsonObject, String openingPrice) {
-        return (Double) jsonObject.get(openingPrice);
+    private Double getaDouble(JSONObject jsonObject, String str) {
+        return (Double) jsonObject.get(str);
     }
+
 }
