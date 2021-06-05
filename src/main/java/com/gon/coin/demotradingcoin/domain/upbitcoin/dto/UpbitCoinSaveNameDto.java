@@ -20,6 +20,7 @@ public class UpbitCoinSaveNameDto {
         this.koreanName = koreanName;
         this.englishName = englishName;
     }
+
     public UpbitCoin toEntity(){
         return UpbitCoin.builder()
                 .market(market)

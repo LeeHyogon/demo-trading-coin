@@ -3,8 +3,10 @@ package com.gon.coin.demotradingcoin;
 import com.gon.coin.demotradingcoin.domain.Account;
 import com.gon.coin.demotradingcoin.domain.Coin;
 import com.gon.coin.demotradingcoin.domain.Member;
+import com.gon.coin.demotradingcoin.domain.upbitcoin.UpbitCoin;
 import com.gon.coin.demotradingcoin.dto.MemberDto;
 import com.gon.coin.demotradingcoin.service.MemberService;
+import com.gon.coin.demotradingcoin.service.UpbitCoinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +21,15 @@ import java.math.BigInteger;
 public class InitDb {
 
     private final InitService initService;
-
+    private final UpbitCoinService upbitCoinService;
     @PostConstruct
     public void init(){
+        String CoinNameURL="https://api.upbit.com/v1/market/all";
         initService.dbInit1();
         initService.dbInit2();
         initService.dbInit3();
         initService.dbInit4();
+        upbitCoinService.saveCoinNameURL(CoinNameURL);
     }
 
     @Component

@@ -1,6 +1,7 @@
 package com.gon.coin.demotradingcoin.api;
 
 import com.gon.coin.demotradingcoin.service.UpbitCoinService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import org.json.simple.JSONArray;
@@ -26,5 +27,9 @@ public class UpbitCoinApiController {
     public String callURLToString(){
         upbitCoinService.saveCoinNameURL(CoinNameURL);
         return "";
+    }
+    @GetMapping("/api/v1/getdayitem")
+    public void getDayData(){
+        upbitCoinService.saveDayItemURL();
     }
 }
