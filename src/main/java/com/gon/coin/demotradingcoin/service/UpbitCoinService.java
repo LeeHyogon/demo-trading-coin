@@ -90,13 +90,14 @@ public class UpbitCoinService {
             System.out.println("jObj.size() = " + jObj.size());
             for (int i = 0; i < jObj.size(); i++) {
                 String data=jObj.get(i).toString();
-
                 JSONParser parser = new JSONParser();
                 JSONObject jsonObject = (JSONObject) parser.parse(data);
                 String market=(String) jsonObject.get("market");
                 String koreanName=(String)jsonObject.get("korean_name");
                 String englishName=(String) jsonObject.get("english_name");
-                if(market.startsWith("KRW")) {
+                if(market.equals("KRW-BTC") ||market.equals("KRW-ETH")||market.equals("KRW-ETC") ||
+                        market.equals("KRW-XRP") || market.equals("KRW-BTG") || market.equals("KRW-DOGE")
+                ) {
                     //System.out.println("market = " + market +" koreanName:"+koreanName+" englishName:"+englishName);
                     UpbitCoinSaveNameDto upbitCoinSaveNameDto = new UpbitCoinSaveNameDto(market, koreanName, englishName);
                     upbitCoinRepository.save(upbitCoinSaveNameDto.toEntity());
@@ -127,21 +128,21 @@ public class UpbitCoinService {
                     String data=jObj.get(i).toString();
                     JSONParser parser = new JSONParser();
                     JSONObject jsonObject = (JSONObject) parser.parse(data);
-                    OffsetDateTime candleDateTime= OffsetDateTime.parse((String)jsonObject.get("candleDateTime"),format);
-                    OffsetDateTime candleDateTimeKst= OffsetDateTime.parse((String)jsonObject.get("candleDateTimeKst"),format);
-                    Double openingPrice=(Double) jsonObject.get("openingPrice");
-                    Double highPrice=(Double) jsonObject.get("highPrice");
-                    Double lowPrice=(Double) jsonObject.get("lowPrice");
-                    Double tradePrice=(Double) jsonObject.get("tradePrice");
-                    Double candleAccTradeVolume=(Double) jsonObject.get("candleAccTradeVolume");
-                    Double candleAccTradePrice=(Double) jsonObject.get("candleAccTradePrice");
+                    OffsetDateTime candleDateTime= getOffsetDateTime(format, jsonObject, "candleDateTime");
+                    OffsetDateTime candleDateTimeKst= getOffsetDateTime(format, jsonObject, "candleDateTimeKst");
+                    Double openingPrice= getaDouble(jsonObject, "openingPrice");
+                    Double highPrice= getaDouble(jsonObject, "highPrice");
+                    Double lowPrice= getaDouble(jsonObject, "lowPrice");
+                    Double tradePrice= getaDouble(jsonObject, "tradePrice");
+                    Double candleAccTradeVolume= getaDouble(jsonObject, "candleAccTradeVolume");
+                    Double candleAccTradePrice= getaDouble(jsonObject, "candleAccTradePrice");
                     Long timestamp=Long.parseLong(String.valueOf(jsonObject.get("timestamp")));
-                    Double prevClosingPrice=(Double) jsonObject.get("prevClosingPrice");
+                    Double prevClosingPrice= getaDouble(jsonObject, "prevClosingPrice");
                     ChangePriceStatus change=ChangePriceStatus.valueOf((String)jsonObject.get("change"));
-                    Double changePrice=(Double)jsonObject.get("changePrice");
-                    Double signedChangePrice=(Double)jsonObject.get("signedChangePrice");
-                    Double changeRate=Double.parseDouble(String.valueOf(jsonObject.get("changeRate")));
-                    Double signedChangeRate=Double.parseDouble(String.valueOf(jsonObject.get("signedChangeRate")));
+                    Double changePrice= getaDouble(jsonObject, "changePrice");
+                    Double signedChangePrice= getaDouble(jsonObject, "signedChangePrice");
+                    Double changeRate= getParseDouble(jsonObject, "changeRate");
+                    Double signedChangeRate= getParseDouble(jsonObject, "signedChangeRate");
 
                     DayItemSaveDto dayItemSaveDto=new DayItemSaveDto().builder()
                             .upbitCoin(upbitCoin)
@@ -169,5 +170,17 @@ public class UpbitCoinService {
                 e.printStackTrace();
             }
         }
+    }
+
+    private OffsetDateTime getOffsetDateTime(DateTimeFormatter format, JSONObject jsonObject, String DateTime) {
+        return OffsetDateTime.parse((String) jsonObject.get(DateTime), format);
+    }
+
+    private double getParseDouble(JSONObject jsonObject, String changeRate) {
+        return Double.parseDouble(String.valueOf(jsonObject.get(changeRate)));
+    }
+
+    private Double getaDouble(JSONObject jsonObject, String openingPrice) {
+        return (Double) jsonObject.get(openingPrice);
     }
 }
