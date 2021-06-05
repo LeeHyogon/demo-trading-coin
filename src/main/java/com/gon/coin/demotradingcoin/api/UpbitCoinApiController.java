@@ -2,7 +2,9 @@ package com.gon.coin.demotradingcoin.api;
 
 import com.gon.coin.demotradingcoin.service.UpbitCoinService;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONObject;
+
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,10 +20,11 @@ import java.nio.charset.Charset;
 @RequiredArgsConstructor
 public class UpbitCoinApiController {
     private final UpbitCoinService upbitCoinService;
-    private static String categoryURL="https://api.upbit.com/v1/market/all";
+    private static String CoinNameURL="https://api.upbit.com/v1/market/all";
 
     @GetMapping("/api/v1/getcoinname")
-    public String getdatas(){
-        return upbitCoinService.callURL(categoryURL);
+    public String callURLToString(){
+        upbitCoinService.saveCoinNameURL(CoinNameURL);
+        return "";
     }
 }
