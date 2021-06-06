@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class UpbitCoinApiController {
     private final UpbitCoinService upbitCoinService;

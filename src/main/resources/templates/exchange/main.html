@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"  >
+
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <h1> 거래소</h1>
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var chartdata = [];
+        $.getJSON('https://crix-api-cdn.upbit.com/v1/crix/candles/days?code=CRIX.UPBIT.[[${code}]]&count=100', function (data) {
+	        $.each(data, function(i, item){
+		        chartdata.push([item.candleDateTimeKst,item.lowPrice,item.openingPrice,item.tradePrice,item.highPrice]);
+			console.log(item);
+		    });
+	    }).done(function(){
+	        console.log(chartdata);
+	        var data2 = google.visualization.arrayToDataTable(chartdata.reverse(), true);
+	        var options = {
+                    legend:'none'
+            };
+            var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+            chart.draw(data2, options);
+        });
+  }
+    </script>
+    </head>
+    <body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    </body>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Coin code</th>
+                <th>Coin koreanName</th>
+                <th>Coin englishName</th>
+                <th>Chart</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="upbitcoin : ${upbitcoins}">
+                <td th:text="${upbitcoin.market}"></td>
+                <td th:text="${upbitcoin.koreanName}" ></td>
+                <td th:text="${upbitcoin.englishName}"></td>
+                <td><a th:href="@{/exchange/{code} (code=${upbitcoin.market})}">차트 보기</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>
+

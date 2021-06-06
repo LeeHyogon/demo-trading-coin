@@ -29,6 +29,7 @@ public class InitDb {
         initService.dbInit3();
         initService.dbInit4();
         upbitCoinService.saveCoinNameURL();
+        upbitCoinService.saveDayItemURL();
     }
 
     @Component
