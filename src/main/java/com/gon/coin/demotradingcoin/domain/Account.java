@@ -43,4 +43,5 @@ public class Account {
         }
         this.balance-=krw;
     }
+
 }

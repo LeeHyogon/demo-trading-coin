@@ -100,7 +100,11 @@ public class UpbitCoinService {
                         market.equals("KRW-XRP") || market.equals("KRW-BTG") || market.equals("KRW-DOGE")
                 ) {
                     //System.out.println("market = " + market +" koreanName:"+koreanName+" englishName:"+englishName);
-                    UpbitCoinSaveNameDto upbitCoinSaveNameDto = new UpbitCoinSaveNameDto(market, koreanName, englishName);
+                    UpbitCoinSaveNameDto upbitCoinSaveNameDto = new UpbitCoinSaveNameDto().builder()
+                            .market(market)
+                            .koreanName(koreanName)
+                            .englishName(englishName)
+                            .build();
                     upbitCoinRepository.save(upbitCoinSaveNameDto.toEntity());
                 }
             }

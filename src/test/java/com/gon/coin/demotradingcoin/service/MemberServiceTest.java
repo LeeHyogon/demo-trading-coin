@@ -33,7 +33,7 @@ public class MemberServiceTest {
         Member member=new Member("memberA","123456",Role.MEMBER,account);
         Double krw=Double.valueOf(5000);
         //when
-        memberService.deposit(member,krw);
+        //memberService.deposit(member,krw);
         //then
         assertEquals("입금계좌에 넣은만큼 금액늘어나야됨",Double.valueOf(6000),member.getAccount().getBalance());
     }
@@ -44,7 +44,7 @@ public class MemberServiceTest {
         Member member=new Member("memberA","123456",Role.MEMBER,account);
         Double krw=Double.valueOf(3000);
         //when
-        memberService.drawal(member,krw);
+        //memberService.drawal(member,krw);
         //then
         assertEquals("입금계좌에 넣은만큼 금액늘어나야됨",Double.valueOf(7000),member.getAccount().getBalance());
     }
@@ -55,7 +55,7 @@ public class MemberServiceTest {
         Member member=new Member("memberA","123456",Role.MEMBER,account);
         Double krw=Double.valueOf(11000);
         //when
-        memberService.drawal(member,krw);
+        //memberService.drawal(member,krw);
         //then
         fail("잔액이 출금 금액보다 적습니다.");
     }

@@ -10,6 +10,7 @@
 
     <h1 th:text="${name}"+ 님> </h1>
     <p th:text="보유금액+${money}+KRW"> </p>
+
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="/bank/list">입출금내역</a>
@@ -19,22 +20,27 @@
         </li>
     </ul>
 
-    <form method="get" action="/bank/deposit">
-        <div class="form-group">
-            <label>입금금액(KRW)</label>
-            <input type="number" name="krw"  class="form-control"
-                   placeholder="최소 5000 KRW">
-        </div>
-        <button type="submit" name="submit" value="value" class="link-button">입금신청</button>
-    </form>
-    <form method="get" action="/bank/drawal">
-        <div class="form-group">
-            <label>출금금액(KRW)</label>
-            <input type="number" name="krw"  class="form-control"
-                   placeholder="최소 5000 KRW">
-        </div>
-        <button type="submit" name="submit" value="value" class="link-button">출금신청</button>
-    </form>
+    <h1>입출금 내역</h1>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>상태</th>
+                <th>금액</th>
+                <th>회원명</th>
+                <th>거래 시간</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="${transaction.status}"></td>
+                <td th:text="${transaction.transferAmount}"></td>
+                <td th:text="${name}"></td>
+                <td th:text="${#temporals.format(transaction.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->

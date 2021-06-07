@@ -2,10 +2,10 @@ package com.gon.coin.demotradingcoin.domain;
 
 
 import com.gon.coin.demotradingcoin.config.Role;
+import com.gon.coin.demotradingcoin.domain.banktransactions.BankTransaction;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class Member {
 
 
     @OneToMany(mappedBy="member")
-    private List<BankTrade> trades=new ArrayList<>();
+    private List<BankTransaction> bankTransactions=new ArrayList<>();
 
     public Member(String username) {
         this.username = username;
@@ -61,5 +61,7 @@ public class Member {
         this.getAccount().deposit(krw);
     }
 
-    public void drawal(Double krw){this.getAccount().drawal(krw);}
+    public void drawal(Double krw){
+        this.getAccount().drawal(krw);
+    }
 }

@@ -1,6 +1,5 @@
 package com.gon.coin.demotradingcoin.service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import com.gon.coin.demotradingcoin.domain.Member;
 import com.gon.coin.demotradingcoin.dto.MemberDto;
 import com.gon.coin.demotradingcoin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -83,17 +81,20 @@ public class MemberService implements UserDetailsService {
         Optional<Member> member = memberRepository.findByUsername(user.getUsername());
         return member;
     }
-    @Transactional
-    public Long deposit(Member member,Double krw){
-        member.deposit(krw);
-        return member.getId();
-    }
 
-    @Transactional
-    public Long drawal(Member member,Double krw){
-        member.drawal(krw);
-        return member.getId();
-    }
+//    @Transactional
+//    public Long deposit(Member member,Double krw){
+//        member.deposit(krw);
+//        //memberRepository.save(member);
+//        return member.getId();
+//    }
+//
+//    @Transactional
+//    public Long drawal(Member member,Double krw){
+//        member.drawal(krw);
+//        //memberRepository.save(member);
+//        return member.getId();
+//    }
 }
 
 

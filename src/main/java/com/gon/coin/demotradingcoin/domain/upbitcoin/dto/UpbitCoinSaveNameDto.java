@@ -8,13 +8,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 public class UpbitCoinSaveNameDto {
     private String market;
     private String koreanName;
     private String englishName;
 
-    @Builder
+
     public UpbitCoinSaveNameDto(String market, String koreanName, String englishName) {
         this.market = market;
         this.koreanName = koreanName;

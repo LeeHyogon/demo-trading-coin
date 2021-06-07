@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BankTradeControllerTest {
+public class BankTransactionControllerTest {
 
     @Autowired
     private MockMvc mvc;
