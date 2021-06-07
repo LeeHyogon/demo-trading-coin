@@ -22,7 +22,6 @@ public class Member {
     private String username;
     private String password;
 
-
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)
     private Role role;
@@ -58,7 +57,9 @@ public class Member {
         this.account = account;
     }
 
-    public void deposit(int krw) {
+    public void deposit(Double krw) {
         this.getAccount().deposit(krw);
     }
+
+    public void drawal(Double krw){this.getAccount().drawal(krw);}
 }

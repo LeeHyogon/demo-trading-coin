@@ -84,8 +84,14 @@ public class MemberService implements UserDetailsService {
         return member;
     }
     @Transactional
-    public Long deposit(Member member,int krw){
+    public Long deposit(Member member,Double krw){
         member.deposit(krw);
+        return member.getId();
+    }
+
+    @Transactional
+    public Long drawal(Member member,Double krw){
+        member.drawal(krw);
         return member.getId();
     }
 }
