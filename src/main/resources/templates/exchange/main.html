@@ -39,6 +39,14 @@
     <div id="chart_div" style="width: 900px; height: 500px;"></div>
     </body>
     <h2 th:text="${#numbers.formatInteger(tradePrice,3,'POINT')}"></h2>
+    <script type="text/javascript">
+
+</script>
+    <!--  시계가 보여질 div -->
+    <div id="result"></div>
+    <input type="button" value="시작" onclick="StartClock();" />
+
+
     <div>
         <table class="table table-striped">
             <thead>
