@@ -189,4 +189,25 @@ public class UpbitCoinService {
         return (Double) jsonObject.get(str);
     }
 
+    public Double getTradePrice(String code) {
+        String DayURL="https://crix-api-cdn.upbit.com/v1/crix/candles/days?" +
+                "code=CRIX.UPBIT."+code+
+                "&count=10";
+        Double tradePrice=0.0;
+        try{
+            URL postUrl = new URL(DayURL);
+            HttpURLConnection con = (HttpURLConnection)postUrl.openConnection();
+            Object obj = JSONValue.parse(new InputStreamReader(con.getInputStream()));
+            JSONArray jObj = (JSONArray) obj;
+            ObjectMapper om = new ObjectMapper();
+            String data=jObj.get(0).toString();
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(data);
+            tradePrice= getaDouble(jsonObject, "tradePrice");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return tradePrice;
+    }
 }

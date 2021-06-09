@@ -23,8 +23,4 @@ import java.nio.charset.Charset;
 public class UpbitCoinApiController {
     private final UpbitCoinService upbitCoinService;
 
-    @GetMapping("/api/v1/getdayitem")
-    public void getDayData(){
-        upbitCoinService.saveDayItemURL();
-    }
 }
