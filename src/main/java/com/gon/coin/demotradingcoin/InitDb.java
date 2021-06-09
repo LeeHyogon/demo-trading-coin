@@ -24,8 +24,7 @@ public class InitDb {
     private final UpbitCoinService upbitCoinService;
     @PostConstruct
     public void init(){
-        initService.dbInit1();
-        initService.dbInit2();
+
         initService.dbInit3();
         initService.dbInit4();
         upbitCoinService.saveCoinNameURL();
@@ -38,14 +37,7 @@ public class InitDb {
     static class InitService{
         private final EntityManager em;
         private final MemberService memberService;
-        public void dbInit1(){
-            Coin coin =createCoin("BitCoin",58000000,"KRW-BTC.png");
-            em.persist(coin);
-        }
-        public void dbInit2(){
-            Coin coin =createCoin("ethereum",4100000,"KRW-ETH.png");
-            em.persist(coin);
-        }
+
         public void dbInit3(){
             Account account1 = createAccount("국민", "123456", Double.valueOf(1000));
             em.persist(account1);
@@ -74,11 +66,7 @@ public class InitDb {
             return account;
         }
 
-        private Coin createCoin(String name,int price, String icon_url) {
-            Coin coin=new Coin(name,price,icon_url);
 
-            return coin;
-        }
     }
 
 }

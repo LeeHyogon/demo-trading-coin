@@ -78,9 +78,11 @@ public class MemberService implements UserDetailsService {
 
     public Optional<Member> currentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Optional<Member> member = memberRepository.findByUsername(user.getUsername());
         return member;
     }
+
 
 //    @Transactional
 //    public Long deposit(Member member,Double krw){

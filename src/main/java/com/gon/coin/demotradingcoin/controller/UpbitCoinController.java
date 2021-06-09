@@ -14,6 +14,18 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
-public class DayItemController {
+public class UpbitCoinController {
+    private final UpbitCoinRepository upbitCoinRepository;
+
+    @GetMapping("/exchange/{code}")
+    public String exchange(@PathVariable("code")String code, Model model){
+        List<UpbitCoin> all=upbitCoinRepository.findAll();
+        List<UpbitCoinResponseNameDto> upbitcoins=all.stream()
+                .map(o->new UpbitCoinResponseNameDto(o))
+                .collect(Collectors.toList());
+        model.addAttribute("upbitcoins",upbitcoins);
+        model.addAttribute("code",code);
+        return "exchange/main";
+    }
 
 }

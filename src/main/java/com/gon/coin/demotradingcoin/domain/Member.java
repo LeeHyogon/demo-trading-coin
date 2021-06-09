@@ -30,6 +30,9 @@ public class Member {
     @JoinColumn(name="account_id")
     private Account account;
 
+    @OneToMany(mappedBy="member")
+    private List<Order> orders=new ArrayList<>();
+
 
     @OneToMany(mappedBy="member")
     private List<BankTransaction> bankTransactions=new ArrayList<>();
