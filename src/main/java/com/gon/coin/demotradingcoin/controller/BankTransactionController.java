@@ -2,7 +2,7 @@ package com.gon.coin.demotradingcoin.controller;
 
 import com.gon.coin.demotradingcoin.domain.banktransactions.BankTransaction;
 import com.gon.coin.demotradingcoin.domain.banktransactions.BankTransactionStatus;
-import com.gon.coin.demotradingcoin.domain.Member;
+import com.gon.coin.demotradingcoin.domain.member.Member;
 import com.gon.coin.demotradingcoin.domain.banktransactions.dto.BankTransactionListDto;
 import com.gon.coin.demotradingcoin.repository.BankTransactionRepository;
 import com.gon.coin.demotradingcoin.repository.MemberRepository;
@@ -12,12 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller

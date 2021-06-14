@@ -1,7 +1,7 @@
 package com.gon.coin.demotradingcoin.domain.banktransactions;
 
 import com.gon.coin.demotradingcoin.domain.BaseTimeEntity;
-import com.gon.coin.demotradingcoin.domain.Member;
+import com.gon.coin.demotradingcoin.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

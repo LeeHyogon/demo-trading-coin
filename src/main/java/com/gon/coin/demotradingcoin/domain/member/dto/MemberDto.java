@@ -1,19 +1,16 @@
-package com.gon.coin.demotradingcoin.dto;
+package com.gon.coin.demotradingcoin.domain.member.dto;
 
 import com.gon.coin.demotradingcoin.config.Role;
-import com.gon.coin.demotradingcoin.domain.Member;
-import lombok.Builder;
+import com.gon.coin.demotradingcoin.domain.member.Member;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class MemberDto {
     private Long id;
@@ -39,3 +36,5 @@ public class MemberDto {
     }
 
 }
+
+

@@ -2,7 +2,7 @@ package com.gon.coin.demotradingcoin.service;
 
 import com.gon.coin.demotradingcoin.config.Role;
 import com.gon.coin.demotradingcoin.domain.Account;
-import com.gon.coin.demotradingcoin.domain.Member;
+import com.gon.coin.demotradingcoin.domain.member.Member;
 import com.gon.coin.demotradingcoin.exception.NotEnoughMoneyException;
 import com.gon.coin.demotradingcoin.repository.MemberRepository;
 import org.junit.Test;
@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -59,4 +61,5 @@ public class MemberServiceTest {
         //then
         fail("잔액이 출금 금액보다 적습니다.");
     }
+
 }

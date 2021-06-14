@@ -21,12 +21,10 @@ public class Coin {
 
     String name;
     int price;
-    String icon_url;
 
 
-    public Coin(String name, int price, String icon_url) {
+    public Coin(String name, int price) {
         this.name=name;
         this.price=price;
-        this.icon_url=icon_url;
     }
 }

@@ -1,8 +1,10 @@
-package com.gon.coin.demotradingcoin.domain;
+package com.gon.coin.demotradingcoin.domain.member;
 
 
 import com.gon.coin.demotradingcoin.config.Role;
+import com.gon.coin.demotradingcoin.domain.Account;
 import com.gon.coin.demotradingcoin.domain.banktransactions.BankTransaction;
+import com.gon.coin.demotradingcoin.domain.order.Order;
 import lombok.*;
 
 import javax.persistence.*;

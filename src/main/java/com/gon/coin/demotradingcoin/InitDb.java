@@ -1,10 +1,9 @@
 package com.gon.coin.demotradingcoin;
 
 import com.gon.coin.demotradingcoin.domain.Account;
-import com.gon.coin.demotradingcoin.domain.Coin;
-import com.gon.coin.demotradingcoin.domain.Member;
-import com.gon.coin.demotradingcoin.domain.upbitcoin.UpbitCoin;
-import com.gon.coin.demotradingcoin.dto.MemberDto;
+import com.gon.coin.demotradingcoin.domain.member.Member;
+
+import com.gon.coin.demotradingcoin.domain.member.dto.MemberDto;
 import com.gon.coin.demotradingcoin.service.MemberService;
 import com.gon.coin.demotradingcoin.service.UpbitCoinService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.math.BigInteger;
 
 
 @Component

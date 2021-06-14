@@ -1,8 +1,7 @@
 package com.gon.coin.demotradingcoin.controller;
 
-import com.gon.coin.demotradingcoin.domain.Address;
-import com.gon.coin.demotradingcoin.domain.Member;
-import com.gon.coin.demotradingcoin.dto.MemberDto;
+import com.gon.coin.demotradingcoin.domain.member.Member;
+import com.gon.coin.demotradingcoin.domain.member.dto.MemberDto;
 import com.gon.coin.demotradingcoin.service.MemberService;
 
 import lombok.RequiredArgsConstructor;

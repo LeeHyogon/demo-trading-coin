@@ -3,7 +3,7 @@ package com.gon.coin.demotradingcoin.service;
 
 import com.gon.coin.demotradingcoin.domain.banktransactions.BankTransaction;
 import com.gon.coin.demotradingcoin.domain.banktransactions.BankTransactionStatus;
-import com.gon.coin.demotradingcoin.domain.Member;
+import com.gon.coin.demotradingcoin.domain.member.Member;
 import com.gon.coin.demotradingcoin.repository.BankTransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

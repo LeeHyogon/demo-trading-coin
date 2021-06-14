@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.gon.coin.demotradingcoin.config.Role;
-import com.gon.coin.demotradingcoin.domain.Member;
-import com.gon.coin.demotradingcoin.dto.MemberDto;
+import com.gon.coin.demotradingcoin.domain.member.Member;
+import com.gon.coin.demotradingcoin.domain.member.dto.MemberDto;
 import com.gon.coin.demotradingcoin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/investments/balance">보유코인</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/investments/history" >투자내역</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/investments/wait_orders" >미체결</a>
+        </li>
+    </ul>
+
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

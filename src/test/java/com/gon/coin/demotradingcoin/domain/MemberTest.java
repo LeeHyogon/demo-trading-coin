@@ -1,5 +1,6 @@
 package com.gon.coin.demotradingcoin.domain;
 
+import com.gon.coin.demotradingcoin.domain.member.Member;
 import com.gon.coin.demotradingcoin.repository.MemberRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

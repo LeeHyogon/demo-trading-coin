@@ -3,6 +3,7 @@ package com.gon.coin.demotradingcoin.controller;
 import com.gon.coin.demotradingcoin.domain.upbitcoin.UpbitCoin;
 import com.gon.coin.demotradingcoin.domain.upbitcoin.dto.UpbitCoinResponseNameDto;
 import com.gon.coin.demotradingcoin.repository.UpbitCoinRepository;
+import com.gon.coin.demotradingcoin.service.OrderService;
 import com.gon.coin.demotradingcoin.service.TradePriceSechdulerService;
 import com.gon.coin.demotradingcoin.service.UpbitCoinService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class UpbitCoinController {
     private final TradePriceSechdulerService tradePriceSechdulerService;
     @GetMapping("/exchange/{code}")
     public String exchange(@PathVariable("code")String code, Model model){
+
         List<UpbitCoin> all=upbitCoinRepository.findAll();
         List<UpbitCoinResponseNameDto> upbitcoins=all.stream()
                 .map(o->new UpbitCoinResponseNameDto(o))

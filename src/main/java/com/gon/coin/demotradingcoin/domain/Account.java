@@ -1,5 +1,6 @@
 package com.gon.coin.demotradingcoin.domain;
 
+import com.gon.coin.demotradingcoin.domain.member.Member;
 import com.gon.coin.demotradingcoin.exception.NotEnoughMoneyException;
 import lombok.Getter;
 

@@ -2,7 +2,6 @@ package com.gon.coin.demotradingcoin.service;
 
 
 import com.gon.coin.demotradingcoin.domain.Coin;
-import com.gon.coin.demotradingcoin.domain.Member;
 import com.gon.coin.demotradingcoin.repository.CoinRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
