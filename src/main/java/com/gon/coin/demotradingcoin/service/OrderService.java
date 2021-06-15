@@ -1,6 +1,7 @@
 package com.gon.coin.demotradingcoin.service;
 
 
+import com.gon.coin.demotradingcoin.domain.Coin;
 import com.gon.coin.demotradingcoin.domain.member.Member;
 import com.gon.coin.demotradingcoin.domain.order.Order;
 import com.gon.coin.demotradingcoin.domain.order.OrderStatus;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,11 +25,13 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final OrderRepositoryOld orderRepositoryOld;
     private final CoinRepository coinRepository;
-
+    private final UpbitCoinService upbitCoinService;
     //transactionPrice: 매수단가 tradingVolume:매수량
     @Transactional
     public Long pendingBuy(Long memberId, String market,Double transactionPrice,Double tradingVolume) {
         Member member=memberRepository.findById(memberId).get();
+        String username=member.getUsername();
+
         OrderStatus orderStatus=OrderStatus.WAIT;
         OrderTradeStatus orderTradeStatus=OrderTradeStatus.BUY;
         Order newOrder = Order.createOrder(member, market, tradingVolume, transactionPrice, orderStatus, orderTradeStatus);
@@ -41,8 +45,23 @@ public class OrderService {
             //주문 상태는 완료로 변경.
             sellOrder.statusComplete();
             newOrder.statusComplete();
-
-
+            //현재 멤버가 가지고있는 특정코인정보가 필요.
+            Coin coin = coinRepository.haveCoinFind(username, market).orElse(null);
+            //해당 코인을 보유하지 않은 경우.
+            if(coin==null){
+                List<String> names=upbitCoinService.getCoinNames(market);
+                String koreanName=names.get(0);
+                String englishName=names.get(1);
+                Double volume=tradingVolume;
+                Double averagePrice=transactionPrice;
+                Double totalKrw=transactionPrice*tradingVolume;
+                Coin newCoin=new Coin().builder()
+                        .market(market)
+                        .member(member)
+                        .build();
+            }else{
+                //coin.update(tradingVolume,transactionPrice);
+            }
 
         }
 
