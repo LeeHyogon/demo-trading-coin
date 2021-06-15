@@ -2,10 +2,7 @@ package com.gon.coin.demotradingcoin.domain;
 
 
 import com.gon.coin.demotradingcoin.domain.member.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +10,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Coin {
     @Id
     @GeneratedValue
@@ -46,13 +45,10 @@ public class Coin {
         this.member=member;
     }
 
-    @Builder
     public Coin(Member member, String market) {
         this.member = member;
         this.market = market;
     }
-    //보유코인이 없을때 새로만드는 코인생성자
-    @Builder
     public Coin(Member member, String market, String koreanName, String englishName, Double volume, Double averagePrice, Double totalKrw) {
         this.member = member;
         this.market = market;
@@ -61,5 +57,15 @@ public class Coin {
         this.volume = volume;
         this.averagePrice = averagePrice;
         this.totalKrw = totalKrw;
+    }
+
+    //---비즈니스용 로직: 지정가 매수 시//
+    public void update(Double tradingVolume, Double transactionPrice) {
+        Double newVolume=volume+tradingVolume;
+        Double addKrw=tradingVolume*transactionPrice;
+        Double newAveragetPrice=((averagePrice*volume)+addKrw)/(newVolume);
+        volume=newVolume;
+        averagePrice=newAveragetPrice;
+        totalKrw+=addKrw;
     }
 }

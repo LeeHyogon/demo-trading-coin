@@ -23,10 +23,9 @@ import java.util.Optional;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
-    private final OrderRepositoryOld orderRepositoryOld;
     private final CoinRepository coinRepository;
     private final UpbitCoinService upbitCoinService;
-    //transactionPrice: 매수단가 tradingVolume:매수량
+    //transactionPrice: 매수단가 tradingVolume:매수량 //일부체결은 일단 제외
     @Transactional
     public Long pendingBuy(Long memberId, String market,Double transactionPrice,Double tradingVolume) {
         Member member=memberRepository.findById(memberId).get();
@@ -36,7 +35,6 @@ public class OrderService {
         OrderTradeStatus orderTradeStatus=OrderTradeStatus.BUY;
         Order newOrder = Order.createOrder(member, market, tradingVolume, transactionPrice, orderStatus, orderTradeStatus);
         orderRepository.save(newOrder);
-
         List<Order> list=orderRepository.TradeFindOrderAscTime(market,transactionPrice,OrderTradeStatus.SELL,OrderStatus.WAIT,tradingVolume);
         //바로 매수주문이 팔릴 수 있을지 확인.
         if(!list.isEmpty()){
@@ -46,9 +44,13 @@ public class OrderService {
             sellOrder.statusComplete();
             newOrder.statusComplete();
             //현재 멤버가 가지고있는 특정코인정보가 필요.
-            Coin coin = coinRepository.haveCoinFind(username, market).orElse(null);
+            Optional<Coin> coin = coinRepository.haveCoinFind(username, market);
+            //보유한경우
+            if(coin.isPresent()){
+                coin.get().update(tradingVolume,transactionPrice);
+            }
             //해당 코인을 보유하지 않은 경우.
-            if(coin==null){
+            else{
                 List<String> names=upbitCoinService.getCoinNames(market);
                 String koreanName=names.get(0);
                 String englishName=names.get(1);
@@ -56,15 +58,20 @@ public class OrderService {
                 Double averagePrice=transactionPrice;
                 Double totalKrw=transactionPrice*tradingVolume;
                 Coin newCoin=new Coin().builder()
-                        .market(market)
                         .member(member)
+                        .market(market)
+                        .koreanName(koreanName)
+                        .englishName(englishName)
+                        .volume(volume)
+                        .averagePrice(averagePrice)
+                        .totalKrw(totalKrw)
                         .build();
-            }else{
-                //coin.update(tradingVolume,transactionPrice);
+                coinRepository.save(newCoin);
             }
-
         }
-
+        else{
+            return Long.valueOf(1);
+        }
         return newOrder.getId();
     }
     @Transactional
