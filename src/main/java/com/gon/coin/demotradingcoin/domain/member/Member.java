@@ -3,6 +3,7 @@ package com.gon.coin.demotradingcoin.domain.member;
 
 import com.gon.coin.demotradingcoin.config.Role;
 import com.gon.coin.demotradingcoin.domain.Account;
+import com.gon.coin.demotradingcoin.domain.Coin;
 import com.gon.coin.demotradingcoin.domain.banktransactions.BankTransaction;
 import com.gon.coin.demotradingcoin.domain.order.Order;
 import lombok.*;
@@ -25,12 +26,15 @@ public class Member {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable=false)
+    @Column
     private Role role;
 
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account account;
+
+    @OneToMany(mappedBy = "member")
+    private List<Coin> coins=new ArrayList<>();
 
     @OneToMany(mappedBy="member")
     private List<Order> orders=new ArrayList<>();

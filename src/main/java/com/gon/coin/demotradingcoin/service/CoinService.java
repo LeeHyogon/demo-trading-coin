@@ -14,10 +14,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CoinService {
 
-
     private final CoinRepository coinRepository;
-
     public List<Coin> findAll(){
         return coinRepository.findAll();
     }
+
 }

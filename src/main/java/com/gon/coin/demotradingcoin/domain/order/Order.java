@@ -8,8 +8,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Getter
+@Table(name="orders")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 public class Order {
@@ -45,7 +47,6 @@ public class Order {
     @CreatedDate
     private LocalDateTime createdDate;
 
-
     public static Order createOrder(Member member, String market, Double tradingVolume, Double transactionPrice, OrderStatus orderStatus, OrderTradeStatus orderTradeStatus) {
         Order order=new Order().builder()
                 .member(member)
@@ -58,6 +59,15 @@ public class Order {
         return order;
     }
 
+
+    //--비즈니스 로직--//
+    public void statusComplete() {
+        this.status=OrderStatus.COMPLETE;
+    }
+
+
+
+    //==생성자 ==//
     @Builder
     public Order(Member member, String market, OrderStatus status, OrderTradeStatus tradeStatus, Double tradingVolume, Double transactionPrice) {
         this.member = member;
@@ -67,14 +77,10 @@ public class Order {
         this.tradingVolume = tradingVolume;
         this.transactionPrice = transactionPrice;
     }
-
-    //==repositoryTest 사용 생성자 ==//
-
     public Order(String market, Double transactionPrice) {
         this.market = market;
         this.transactionPrice = transactionPrice;
     }
-
     public Order(String market, OrderStatus status, OrderTradeStatus tradeStatus, Double transactionPrice) {
         this.market = market;
         this.status = status;
@@ -88,4 +94,5 @@ public class Order {
         this.tradingVolume = tradingVolume;
         this.transactionPrice = transactionPrice;
     }
+
 }

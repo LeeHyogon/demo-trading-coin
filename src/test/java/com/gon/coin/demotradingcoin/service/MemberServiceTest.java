@@ -61,5 +61,4 @@ public class MemberServiceTest {
         //then
         fail("잔액이 출금 금액보다 적습니다.");
     }
-
 }

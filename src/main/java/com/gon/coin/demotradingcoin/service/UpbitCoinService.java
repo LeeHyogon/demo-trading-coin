@@ -32,6 +32,7 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -113,6 +114,59 @@ public class UpbitCoinService {
             e.printStackTrace();
         }
     }
+    //코인 이름 불러오기 List요쇼 0:koreanName 1: englishName
+    public List<String> getCoinNames(String code){
+        String CoinNameURL="https://api.upbit.com/v1/market/all";
+        List<String> ret=new ArrayList<>();
+        try{
+            URL postUrl = new URL(CoinNameURL);
+            HttpURLConnection con = (HttpURLConnection)postUrl.openConnection();
+            Object obj = JSONValue.parse(new InputStreamReader(con.getInputStream()));
+            JSONArray jObj = (JSONArray) obj;
+            ObjectMapper om = new ObjectMapper();
+            System.out.println("jObj.size() = " + jObj.size());
+            for (int i = 0; i < jObj.size(); i++) {
+                String data=jObj.get(i).toString();
+                JSONParser parser = new JSONParser();
+                JSONObject jsonObject = (JSONObject) parser.parse(data);
+                String market=(String) jsonObject.get("market");
+                String koreanName=(String)jsonObject.get("korean_name");
+                String englishName=(String) jsonObject.get("english_name");
+                if(market.equals(code)){
+                    ret.add(koreanName);
+                    ret.add(englishName);
+                    break;
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return ret;
+    }
+    //현재 시장가
+    public Double getTradePrice(String code) {
+        String DayURL="https://crix-api-cdn.upbit.com/v1/crix/candles/days?" +
+                "code=CRIX.UPBIT."+code+
+                "&count=1";
+        Double tradePrice=0.0;
+        try{
+            URL postUrl = new URL(DayURL);
+            HttpURLConnection con = (HttpURLConnection)postUrl.openConnection();
+            Object obj = JSONValue.parse(new InputStreamReader(con.getInputStream()));
+            JSONArray jObj = (JSONArray) obj;
+            ObjectMapper om = new ObjectMapper();
+            String data=jObj.get(0).toString();
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(data);
+            tradePrice= getaDouble(jsonObject, "tradePrice");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return tradePrice;
+    }
+
     @Transactional
     public void saveDayItemURL(){
         List<UpbitCoin> upbitCoins=upbitCoinRepository.findAll();
@@ -177,37 +231,16 @@ public class UpbitCoinService {
         }
     }
 
+
+    //--DayItem json data 변환 메서드--//
     private OffsetDateTime getOffsetDateTime(DateTimeFormatter format, JSONObject jsonObject, String DateTime) {
         return OffsetDateTime.parse((String) jsonObject.get(DateTime), format);
     }
-
     private double getParseDouble(JSONObject jsonObject, String str) {
         return Double.parseDouble(String.valueOf(jsonObject.get(str)));
     }
-
     private Double getaDouble(JSONObject jsonObject, String str) {
         return (Double) jsonObject.get(str);
     }
 
-    public Double getTradePrice(String code) {
-        String DayURL="https://crix-api-cdn.upbit.com/v1/crix/candles/days?" +
-                "code=CRIX.UPBIT."+code+
-                "&count=10";
-        Double tradePrice=0.0;
-        try{
-            URL postUrl = new URL(DayURL);
-            HttpURLConnection con = (HttpURLConnection)postUrl.openConnection();
-            Object obj = JSONValue.parse(new InputStreamReader(con.getInputStream()));
-            JSONArray jObj = (JSONArray) obj;
-            ObjectMapper om = new ObjectMapper();
-            String data=jObj.get(0).toString();
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(data);
-            tradePrice= getaDouble(jsonObject, "tradePrice");
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return tradePrice;
-    }
 }

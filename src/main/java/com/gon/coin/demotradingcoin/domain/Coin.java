@@ -1,14 +1,14 @@
 package com.gon.coin.demotradingcoin.domain;
 
 
+import com.gon.coin.demotradingcoin.domain.member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,12 +19,29 @@ public class Coin {
     @Column(name = "coin_id")
     private Long id;
 
-    String name;
-    int price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 
-    public Coin(String name, int price) {
-        this.name=name;
-        this.price=price;
+    private String market;
+
+    private String koreanName;
+    private String englishName;
+
+    //보유 수량
+    private Double volume;
+
+    //매수 평균가
+    private Double averagePrice;
+
+    //총매수 금액,매수금액(krw)
+    private Double totalKrw;
+
+
+    //jpa 테스트용 생성자
+    public Coin(Member member) {
+        this.member=member;
     }
 }

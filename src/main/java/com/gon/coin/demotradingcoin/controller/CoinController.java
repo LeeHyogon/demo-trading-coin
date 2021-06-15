@@ -14,13 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CoinController {
 
-
     private final CoinService coinService;
 
-//    @GetMapping("/")
-//    public String list(Model model) {
-//        List<Coin> coins = coinService.findAll();
-//        model.addAttribute("coins", coins);
-//        return "home";
-//    }
+
 }

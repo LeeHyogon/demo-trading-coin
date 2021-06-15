@@ -1,39 +1,32 @@
 package com.gon.coin.demotradingcoin.repository;
 
-import com.gon.coin.demotradingcoin.domain.member.Member;
 import com.gon.coin.demotradingcoin.domain.order.Order;
 import com.gon.coin.demotradingcoin.domain.order.OrderStatus;
 import com.gon.coin.demotradingcoin.domain.order.OrderTradeStatus;
-import org.aspectj.weaver.ast.Or;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Transactional
 public class OrderRepositoryTest {
-
     @Autowired
     OrderRepository orderRepository;
-
-    @Autowired
-    OrderRepositoryOld orderRepositoryOld;
     @Test
-    public void findBy1() {
+    public void findBy1() throws Exception {
         //given
         String market="KRW-BTC";
         Double transactionPrice= 10000.0;
+
         Order order1=new Order(market,transactionPrice);
         Order order2=new Order(market,transactionPrice);
         orderRepository.save(order1);
@@ -48,26 +41,30 @@ public class OrderRepositoryTest {
         }
     }
     @Test
-    public void findBy2() throws Exception {
+    public void 주문대기시간정렬확인() throws Exception {
         //given
         String market="KRW-BTC";
         Double transactionPrice=Double.valueOf(10000);
-        Member member =new Member();
         OrderTradeStatus tradeStatus=OrderTradeStatus.SELL;
         OrderStatus orderStatus=OrderStatus.WAIT;
-        Order order1=new Order(market,orderStatus,tradeStatus,transactionPrice);
-        Order order2=new Order(market,orderStatus,tradeStatus,transactionPrice);
+        Double tradingVolume=0.3;
+        //생성자 파라미터 순서 조심
+
+        Order order1=new Order(market,orderStatus,tradeStatus,tradingVolume,transactionPrice);
         orderRepository.save(order1);
+        Thread.sleep(1000);
+        Order order2=new Order(market,orderStatus,tradeStatus,tradingVolume,transactionPrice);
         orderRepository.save(order2);
         List<Order> orderList=
-                orderRepository.findByMarketAndTransactionPriceAndTradeStatusAndStatus(market,transactionPrice,tradeStatus,orderStatus);
-        assertEquals(orderList.size(),2);
+                orderRepository.TradeFindOrderAscTime(market,transactionPrice,tradeStatus,orderStatus,0.2);
         //then
+        assertEquals(orderList.size(),2);
         for( Order order : orderList){
             assertEquals(order.getMarket(),"KRW-BTC");
             assertEquals(order.getTransactionPrice(),Double.valueOf(10000));
             assertEquals(order.getTradeStatus(),OrderTradeStatus.SELL);
             assertEquals(order.getStatus(),OrderStatus.WAIT);
+            System.out.println(order.getCreatedDate()+"----------------!!!!!!!!!!!!!!_--------------");
         }
     }
     @Test
@@ -78,33 +75,23 @@ public class OrderRepositoryTest {
         OrderTradeStatus tradeStatus=OrderTradeStatus.SELL;
         OrderStatus orderStatus=OrderStatus.WAIT;
         Double tradingVolume=0.3;
-        Order order1=new Order(market,orderStatus,tradeStatus,transactionPrice,tradingVolume);
-        Order order2=new Order(market,orderStatus,tradeStatus,transactionPrice,tradingVolume);
+        //생성자 파라미터 순서 조심
+        Order order1=new Order(market,orderStatus,tradeStatus,tradingVolume,transactionPrice);
+        Order order2=new Order(market,orderStatus,tradeStatus,tradingVolume,transactionPrice);
         orderRepository.save(order1);
         orderRepository.save(order2);
-//        List<Order> orderList=
-//        List<Order> orderList=
-//                orderRepository.findByTradeList(market,transactionPrice,tradeStatus,orderStatus,0.4);
-//        //then
-//        assertEquals(orderList.size(),2);
-//        for( Order order : orderList){
-//            assertEquals(order.getMarket(),"KRW-BTC");
-//            assertEquals(order.getTransactionPrice(),Double.valueOf(10000));
-//            assertEquals(order.getTradeStatus(),OrderTradeStatus.SELL);
-//            assertEquals(order.getStatus(),OrderStatus.WAIT);
-//            assertEquals(order.getTradingVolume(),Double.valueOf(0.3));
-//            assertEquals(order.getTradingVolume(),Double.valueOf(0.4));
-//        }
-    }
 
-    @Test
-    public void errorTest() throws Exception {
-        //given
-        orderRepository.findPlz();
-        //when
-
+        List<Order> orderList=
+                orderRepository.TradeFind(market,transactionPrice,tradeStatus,orderStatus,0.4);
         //then
+        assertEquals(orderList.size(),2);
+        for( Order order : orderList){
+            assertEquals(order.getMarket(),"KRW-BTC");
+            assertEquals(order.getTransactionPrice(),Double.valueOf(10000));
+            assertEquals(order.getTradeStatus(),OrderTradeStatus.SELL);
+            assertEquals(order.getStatus(),OrderStatus.WAIT);
+            assertEquals(order.getTradingVolume(),Double.valueOf(0.3));
+//            assertEquals(order.getTradingVolume(),Double.valueOf(0.4));
+        }
     }
-
-
 }
