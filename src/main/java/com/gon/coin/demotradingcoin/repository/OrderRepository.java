@@ -33,11 +33,20 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
             " and o.status= :status" +
             " and o.tradingVolume >= :tradingVolume" +
             " order by o.createdDate asc")
+    List<Order> TradeFindOrderAscTimeWithV(@Param("market") String market,
+                                           @Param("transactionPrice") Double price,
+                                           @Param("tradeStatus") OrderTradeStatus tradeStatus,
+                                           @Param("status") OrderStatus status,
+                                           @Param("tradingVolume") Double tradingVolume);
+    @Query("select o from Order o where o.market= :market" +
+            " and o.transactionPrice= :transactionPrice" +
+            " and o.tradeStatus= :tradeStatus" +
+            " and o.status= :status" +
+            " order by o.createdDate asc")
     List<Order> TradeFindOrderAscTime(@Param("market") String market,
-                          @Param("transactionPrice") Double price,
-                          @Param("tradeStatus") OrderTradeStatus tradeStatus,
-                          @Param("status") OrderStatus status,
-                          @Param("tradingVolume") Double tradingVolume);
+                                      @Param("transactionPrice") Double price,
+                                      @Param("tradeStatus") OrderTradeStatus tradeStatus,
+                                      @Param("status") OrderStatus status);
 
 
     List<Order> findByMarketAndTransactionPriceAndTradeStatusAndStatus(String market, Double transactionPrice, OrderTradeStatus tradeStatus, OrderStatus status);

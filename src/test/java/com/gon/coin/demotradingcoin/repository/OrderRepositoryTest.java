@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -56,7 +55,7 @@ public class OrderRepositoryTest {
         Order order2=new Order(market,orderStatus,tradeStatus,tradingVolume,transactionPrice);
         orderRepository.save(order2);
         List<Order> orderList=
-                orderRepository.TradeFindOrderAscTime(market,transactionPrice,tradeStatus,orderStatus,0.2);
+                orderRepository.TradeFindOrderAscTimeWithV(market,transactionPrice,tradeStatus,orderStatus,0.2);
         //then
         assertEquals(orderList.size(),2);
         for( Order order : orderList){

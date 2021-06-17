@@ -65,6 +65,10 @@ public class Order {
         this.status=OrderStatus.COMPLETE;
     }
 
+    //매도 주문의 일부분이 판매되는 경우.
+    public void partContract(Double tradingVolume) {
+        this.tradingVolume-=tradingVolume;
+    }
 
 
     //==생성자 ==//

@@ -46,7 +46,7 @@ public class OrderServiceTest {
         //when
         Long ret = orderService.pendingBuy(member1.getId(), market, transactionPrice, tradingVolume);
         //then
-        assertEquals(ret,Long.valueOf(1));
+        assertEquals(ret,Long.valueOf(-1));
     }
     @Test
     public void 지정가매수_매도주문_코인보유한경우() throws Exception {

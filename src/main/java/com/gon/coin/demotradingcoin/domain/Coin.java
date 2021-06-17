@@ -60,12 +60,20 @@ public class Coin {
     }
 
     //---비즈니스용 로직: 지정가 매수 시//
-    public void update(Double tradingVolume, Double transactionPrice) {
+    public void buyUpdate(Double tradingVolume, Double transactionPrice) {
         Double newVolume=volume+tradingVolume;
         Double addKrw=tradingVolume*transactionPrice;
         Double newAveragetPrice=((averagePrice*volume)+addKrw)/(newVolume);
         volume=newVolume;
         averagePrice=newAveragetPrice;
         totalKrw+=addKrw;
+    }
+    public void sellUpdate(Double tradingVolume, Double transactionPrice) {
+        Double newVolume=volume-tradingVolume;
+        Double minusKrw=tradingVolume*transactionPrice;
+        Double newAveragetPrice=((averagePrice*volume)-minusKrw)/(newVolume);
+        volume=newVolume;
+        averagePrice=newAveragetPrice;
+        totalKrw-=minusKrw;
     }
 }
