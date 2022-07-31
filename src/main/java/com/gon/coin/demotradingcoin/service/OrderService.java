@@ -167,16 +167,6 @@ public class OrderService {
         }
         return newOrder.getId();
     }
-    @Transactional
-    public Long pendingSell(Long memberId, String market,Double transactionPrice,Double tradingVolume) {
-        Member member=memberRepository.findById(memberId).get();
-        OrderStatus orderStatus=OrderStatus.WAIT;
-        OrderTradeStatus orderTradeStatus=OrderTradeStatus.SELL;
-        Order order=Order.createOrder(member,market,tradingVolume,transactionPrice,orderStatus,orderTradeStatus);
-        orderRepository.save(order);
-        return order.getId();
-    }
-
 
 
 
