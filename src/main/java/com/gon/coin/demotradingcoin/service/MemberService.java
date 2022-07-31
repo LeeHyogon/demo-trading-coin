@@ -37,7 +37,8 @@ public class MemberService implements UserDetailsService {
     private void validateDuplicateMember(Member member) {
         //EXCEPTION, 실무에서는 이름에 unique제약조건 걸어줘야함.
         Optional<Member> findMembers=memberRepository.findByUsername(member.getUsername());
-        if(!findMembers.isEmpty()){
+        //isEmpty()-> isPresent() 변경, why? java 11-> java 8
+        if(!findMembers.isPresent()){
             throw new IllegalStateException("already exist user");
         }
     }
